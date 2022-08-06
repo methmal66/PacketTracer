@@ -1,0 +1,75 @@
+Router renaming
+
+Router>enable
+Router#configure terminal
+Router(config)#hostname R1
+R1(config)#
+
+Router>enable
+Router#configure terminal
+Router(config)#hostname R2
+R2(config)#
+
+Router>enable
+Router#configure terminal
+Router(config)#hostname R3
+R3(config)#
+
++++++++++++++++++++++++++++++++++++++
+Default gateway configuration
+
+R1(config)#interface fa0/0
+R1(config-if)#ip address 192.168.100.1 255.255.255.192
+R1(config-if)#no shutdown
+R1(config-if)#exit
+R1(config)#
+
+R2(config)#interface fa0/0
+R2(config-if)#ip address 192.168.100.65 255.255.255.192
+R2(config-if)#no shutdown
+R2(config-if)#exit
+R2(config)#
+
+R3(config)#interface fa0/0
+R3(config-if)#ip address 192.168.100.129 255.255.255.192
+R3(config-if)#no shutdown
+R3(config-if)#exit
+R3(config)#
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+Serial link configurations
+
+R1(config)#interface Se0/1/0
+R1(config-if)#ip address 192.168.100.193 255.255.255.252
+R1(config-if)#clockrate 64000
+R1(config-if)#no shutdown
+R1(config-if)#exit
+
+R2(config)#interface Se0/1/1
+R2(config-if)#ip address 192.168.100.194 255.255.255.252
+R2(config-if)#no shutdown
+R2(config-if)#exit
+R2(config)#interface Se0/1/0
+R2(config-if)#ip address 192.168.100.197 255.255.255.252
+R2(config-if)#clockrate 64000
+R2(config-if)#no shutdown
+R2(config-if)#exit
+R2(config)#
+
+R3(config)#interface Se0/1/0
+R3(config-if)#ip address 192.168.100.198 255.255.255.252
+R3(config-if)#no shutdown
+R3(config-if)#exit
+R3(config)#
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Static route configurations
+
+R2(config)#ip route 192.168.100.0 255.255.255.192 192.168.100.193
+R2(config)#ip route 192.168.100.128 255.255.255.192 192.168.100.198
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Default Route configurations
+
+R1(config)#ip route 0.0.0.0 0.0.0.0 192.168.100.194
+R3(config)#ip route 0.0.0.0 0.0.0.0 192.168.100.197
